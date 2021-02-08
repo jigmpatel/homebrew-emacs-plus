@@ -12,6 +12,7 @@ class EmacsPlusAT28 < EmacsBase
   option "without-cocoa", "Build a non-Cocoa version of Emacs"
 
   # Opt-in
+  option "with-gnutls", "Build with gnutls support"
   option "with-ctags", "Don't remove the ctags executable that Emacs provides"
   option "with-x11", "Experimental: build with x11 support"
   option "with-no-titlebar", "Experimental: build without titlebar"
@@ -28,7 +29,7 @@ class EmacsPlusAT28 < EmacsBase
   depends_on "gnu-sed" => :build
   depends_on "pkg-config" => :build
   depends_on "texinfo" => :build
-  depends_on "gnutls"
+  depends_on "gnutls" => :optional
   depends_on "librsvg"
   depends_on "little-cms2"
   depends_on "jansson"
@@ -113,7 +114,13 @@ class EmacsPlusAT28 < EmacsBase
     ]
 
     args << "--with-xml2"
-    args << "--with-gnutls"
+
+    args <<
+      if build.with? "gnutls"
+        "--with-gnutls"
+      else
+        "--without-gnutls"
+      end
 
     args << "--with-nativecomp" if build.with? "native-comp"
 
