@@ -10,6 +10,7 @@ class EmacsPlusAT28 < EmacsBase
 
   # Opt-out
   option "without-cocoa", "Build a non-Cocoa version of Emacs"
+  option "without-imagemagick", "Build without imagemagick"
 
   # Opt-in
   option "with-gnutls", "Build with gnutls support"
@@ -33,7 +34,7 @@ class EmacsPlusAT28 < EmacsBase
   depends_on "librsvg"
   depends_on "little-cms2"
   depends_on "jansson"
-  depends_on "imagemagick" => :recommended
+  depends_on "imagemagick" => :optional
   depends_on "dbus" => :optional
   depends_on "mailutils" => :optional
 
