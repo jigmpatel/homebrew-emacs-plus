@@ -12,6 +12,7 @@ class EmacsPlusAT28 < EmacsBase
   option "without-cocoa", "Build a non-Cocoa version of Emacs"
   option "without-imagemagick", "Build without imagemagick"
   option "with-rsvg", "Build with rsvg support"
+  option "with-libxml2", "Build with libxml2"
 
   # Opt-in
   option "with-gnutls", "Build with gnutls support"
@@ -33,12 +34,12 @@ class EmacsPlusAT28 < EmacsBase
   depends_on "texinfo" => :build
   depends_on "gnutls" if build.with? "gnutls"
   depends_on "librsvg" if build.with? "rsvg"
-  depends_on "little-cms2"
+  depends_on "little-cms2" => :recommended
   depends_on "jansson"
   depends_on "imagemagick" => :optional
   depends_on "dbus" => :optional
   depends_on "mailutils" => :optional
-  depends_on "libxml2" => :recommended
+  depends_on "libxml2" if build.with? "libxml2"
 
   if build.with? "x11"
     depends_on "libxaw"
@@ -116,7 +117,7 @@ class EmacsPlusAT28 < EmacsBase
       --prefix=#{prefix}
     ]
 
-    args << "--with-xml2"
+    args << "--with-xml2" if build.with? "libxml2"
 
     args << "--with-gnutls=ifavailable"
 
