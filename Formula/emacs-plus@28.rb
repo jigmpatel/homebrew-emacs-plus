@@ -11,11 +11,11 @@ class EmacsPlusAT28 < EmacsBase
   # Opt-out
   option "without-cocoa", "Build a non-Cocoa version of Emacs"
   option "without-imagemagick", "Build without imagemagick"
-  option "with-rsvg", "Build with rsvg support"
-  option "with-libxml2", "Build with libxml2"
 
   # Opt-in
   option "with-gnutls", "Build with gnutls support"
+  option "with-rsvg", "Build with rsvg support"
+  option "with-libxml2", "Build with libxml2"
   option "with-ctags", "Don't remove the ctags executable that Emacs provides"
   option "with-x11", "Experimental: build with x11 support"
   option "with-no-titlebar", "Experimental: build without titlebar"
