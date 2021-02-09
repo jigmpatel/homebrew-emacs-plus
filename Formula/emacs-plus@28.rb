@@ -11,6 +11,7 @@ class EmacsPlusAT28 < EmacsBase
   # Opt-out
   option "without-cocoa", "Build a non-Cocoa version of Emacs"
   option "without-imagemagick", "Build without imagemagick"
+  option "with-rsvg", "Build with rsvg support"
 
   # Opt-in
   option "with-gnutls", "Build with gnutls support"
@@ -30,13 +31,14 @@ class EmacsPlusAT28 < EmacsBase
   depends_on "gnu-sed" => :build
   depends_on "pkg-config" => :build
   depends_on "texinfo" => :build
-  depends_on "gnutls" => :optional
-  depends_on "librsvg"
+  depends_on "gnutls" if build.with? "gnutls"
+  depends_on "librsvg" if build.with? "rsvg"
   depends_on "little-cms2"
   depends_on "jansson"
   depends_on "imagemagick" => :optional
   depends_on "dbus" => :optional
   depends_on "mailutils" => :optional
+  depends_on "libxml2" => :recommended
 
   if build.with? "x11"
     depends_on "libxaw"
@@ -116,12 +118,7 @@ class EmacsPlusAT28 < EmacsBase
 
     args << "--with-xml2"
 
-    args <<
-      if build.with? "gnutls"
-        "--with-gnutls"
-      else
-        "--without-gnutls"
-      end
+    args << "--with-gnutls=ifavailable"
 
     args << "--with-nativecomp" if build.with? "native-comp"
 
@@ -168,7 +165,7 @@ class EmacsPlusAT28 < EmacsBase
     end
 
     args << "--with-modules"
-    args << "--with-rsvg"
+    args << "--with-rsvg" if build.with? "rsvg"
     args << "--without-pop" if build.with? "mailutils"
     args << "--with-xwidgets" if build.with? "xwidgets"
 
